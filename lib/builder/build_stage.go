@@ -161,7 +161,7 @@ func createDockerfileSteps(
 	for _, directive := range directives {
 		step, err := step.NewDockerfileStep(ctx, directive, seed)
 		if err != nil {
-			return nil, fmt.Errorf("directive to build step: %v", err)
+			return nil, fmt.Errorf("directive to build step: %s", err)
 		}
 		steps = append(steps, step)
 		seed = step.CacheID()
@@ -273,7 +273,6 @@ func (stage *buildStage) GetDistributionManifest(store storage.ImageStore) (*ima
 }
 
 // saveImage saves the image produced at the end of this stage.
-// TODO: handle existing layer or manifest.
 func (stage *buildStage) saveImage(store storage.ImageStore, repo, tag string) (*image.DistributionManifest, error) {
 	manifest, err := stage.GetDistributionManifest(store)
 	if err != nil {
